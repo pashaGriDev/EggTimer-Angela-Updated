@@ -14,6 +14,9 @@
 		10952134298064A5002C7AC2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 10952132298064A5002C7AC2 /* LaunchScreen.storyboard */; };
 		1095214029806716002C7AC2 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 1095213F29806716002C7AC2 /* .gitignore */; };
 		1095214229814FBB002C7AC2 /* alarm_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1095214129814FBB002C7AC2 /* alarm_sound.mp3 */; };
+		109521442981595A002C7AC2 /* EggButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109521432981595A002C7AC2 /* EggButton.swift */; };
+		109521462981663E002C7AC2 /* ContanerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109521452981663E002C7AC2 /* ContanerView.swift */; };
+		1095214829816F59002C7AC2 /* EggImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1095214729816F59002C7AC2 /* EggImageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,9 @@
 		10952135298064A5002C7AC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1095213F29806716002C7AC2 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		1095214129814FBB002C7AC2 /* alarm_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alarm_sound.mp3; sourceTree = "<group>"; };
+		109521432981595A002C7AC2 /* EggButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EggButton.swift; sourceTree = "<group>"; };
+		109521452981663E002C7AC2 /* ContanerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContanerView.swift; sourceTree = "<group>"; };
+		1095214729816F59002C7AC2 /* EggImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EggImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +66,6 @@
 			isa = PBXGroup;
 			children = (
 				1095213E29806638002C7AC2 /* Application */,
-				1095213D29806608002C7AC2 /* Model */,
 				1095213C298065FF002C7AC2 /* View */,
 				1095213B298065C7002C7AC2 /* Resources */,
 				10952132298064A5002C7AC2 /* LaunchScreen.storyboard */,
@@ -82,15 +87,11 @@
 			isa = PBXGroup;
 			children = (
 				1095212B298064A4002C7AC2 /* ViewController.swift */,
+				109521432981595A002C7AC2 /* EggButton.swift */,
+				109521452981663E002C7AC2 /* ContanerView.swift */,
+				1095214729816F59002C7AC2 /* EggImageView.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		1095213D29806608002C7AC2 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		1095213E29806638002C7AC2 /* Application */ = {
@@ -174,8 +175,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1095214829816F59002C7AC2 /* EggImageView.swift in Sources */,
 				1095212C298064A4002C7AC2 /* ViewController.swift in Sources */,
+				109521442981595A002C7AC2 /* EggButton.swift in Sources */,
 				10952128298064A4002C7AC2 /* AppDelegate.swift in Sources */,
+				109521462981663E002C7AC2 /* ContanerView.swift in Sources */,
 				1095212A298064A4002C7AC2 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -321,7 +325,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -353,7 +357,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (

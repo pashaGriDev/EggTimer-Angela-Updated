@@ -7,7 +7,23 @@
 
 import UIKit
 
+enum EggImage: String {
+    case soft_egg
+    case medium_egg
+    case hard_egg
+}
+
+enum ConditionEgg: String {
+    case soft
+    case medium
+    case hard
+}
+
 class ViewController: UIViewController {
+    
+    // MARK: - Constants
+    
+    let offset: CGFloat = 8.0
     
     let titleLable: UILabel = {
         let lable = UILabel()
@@ -18,7 +34,7 @@ class ViewController: UIViewController {
         return lable
     }()
     
-    lazy var mainStackView: UIStackView = {
+    let mainStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
@@ -30,18 +46,25 @@ class ViewController: UIViewController {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
+        stackView.spacing = offset
         return stackView
     }()
     
-    let tempView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .lightGray
-        return view
-    }()
+    let contanerViews: [ContanerView] = [
+        .init(
+            button: EggButton(title: ConditionEgg.soft.rawValue),
+            imageView: EggImageView(UIImage(named: EggImage.soft_egg.rawValue))),
+        .init(
+            button: EggButton(title: ConditionEgg.medium.rawValue),
+            imageView: EggImageView(UIImage(named: EggImage.medium_egg.rawValue))),
+        .init(
+            button: EggButton(title: ConditionEgg.hard.rawValue),
+            imageView: EggImageView(UIImage(named: EggImage.hard_egg.rawValue))),
+        ]
     
     let tempView2: UIView = {
         let view = UIView()
-        view.backgroundColor = .gray
+        view.backgroundColor = .lightGray
         return view
     }()
 
@@ -49,20 +72,29 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         setupe()
     }
+    
+    // MARK: - Start setup
 
     private func setupe() {
         view.backgroundColor = .white
         view.addSubview(mainStackView)
         
+        contanerViews.forEach {
+            containerStackView.addArrangedSubview($0)
+        }
+        
         mainStackView.addArrangedSubview(titleLable)
-        mainStackView.addArrangedSubview(tempView)
+        mainStackView.addArrangedSubview(containerStackView)
         mainStackView.addArrangedSubview(tempView2)
         
         NSLayoutConstraint.activate([
             mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             mainStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             mainStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            mainStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)])
+            mainStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            containerStackView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor, constant: -offset),
+            containerStackView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor, constant: offset)])
     }
 
 }
