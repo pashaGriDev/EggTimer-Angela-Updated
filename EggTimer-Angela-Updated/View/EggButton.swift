@@ -8,13 +8,12 @@
 import UIKit
 
 class EggButton: UIButton {
+
     init(title: String) {
         super.init(frame: .zero)
         setTitle(title, for: .normal)
-        setTitleColor(.black, for: .normal)
-        
-//        NSLayoutConstraint.activate([
-//            self.heightAnchor.constraint(equalToConstant: 200)])
+        setTitleColor(.white, for: .normal)
+        titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
     }
     
     required init?(coder: NSCoder) {

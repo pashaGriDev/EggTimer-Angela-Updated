@@ -13,7 +13,7 @@ enum EggImage: String {
     case hard_egg
 }
 
-enum ConditionEgg: String {
+enum EggCondition: String {
     case soft
     case medium
     case hard
@@ -24,6 +24,24 @@ class ViewController: UIViewController {
     // MARK: - Constants
     
     let offset: CGFloat = 8.0
+    
+    var timer = Timer()
+    var totalTimer = 0
+    var secondsPassed = 0
+    
+    let eggTimes: [String : Int] = [
+        EggCondition.soft.rawValue : 3,
+        EggCondition.medium.rawValue : 5,
+        EggCondition.hard.rawValue : 7]
+    
+    let progressView: UIProgressView = {
+        let progress = UIProgressView()
+        progress.progressViewStyle = .default
+        progress.trackTintColor = .systemGray6
+        progress.progressTintColor = .orange
+        progress.translatesAutoresizingMaskIntoConstraints = false
+        return progress
+    }()
     
     let titleLable: UILabel = {
         let lable = UILabel()
@@ -50,21 +68,19 @@ class ViewController: UIViewController {
         return stackView
     }()
     
-    let contanerViews: [ContanerView] = [
-        .init(
-            button: EggButton(title: ConditionEgg.soft.rawValue),
-            imageView: EggImageView(UIImage(named: EggImage.soft_egg.rawValue))),
-        .init(
-            button: EggButton(title: ConditionEgg.medium.rawValue),
-            imageView: EggImageView(UIImage(named: EggImage.medium_egg.rawValue))),
-        .init(
-            button: EggButton(title: ConditionEgg.hard.rawValue),
-            imageView: EggImageView(UIImage(named: EggImage.hard_egg.rawValue))),
-        ]
+    let eggButtons: [EggButton] = [
+        .init(title: EggCondition.soft.rawValue),
+        .init(title: EggCondition.medium.rawValue),
+        .init(title: EggCondition.hard.rawValue)]
     
-    let tempView2: UIView = {
+    let eggImageView: [EggImageView] = [
+        .init(UIImage(named: EggImage.soft_egg.rawValue)),
+        .init(UIImage(named: EggImage.medium_egg.rawValue)),
+        .init(UIImage(named: EggImage.hard_egg.rawValue))]
+    
+    lazy var containerForProgressView: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightGray
+        view.addSubview(progressView)
         return view
     }()
 
@@ -79,14 +95,19 @@ class ViewController: UIViewController {
         view.backgroundColor = .white
         view.addSubview(mainStackView)
         
-        contanerViews.forEach {
+        // add targets
+        eggButtons.forEach { button in
+            button.addTarget(self, action: #selector(didPressed), for: .touchUpInside)
+        }
+        
+        conteinerViews().forEach {
             containerStackView.addArrangedSubview($0)
         }
         
-        mainStackView.addArrangedSubview(titleLable)
-        mainStackView.addArrangedSubview(containerStackView)
-        mainStackView.addArrangedSubview(tempView2)
-        
+        [titleLable, containerStackView, containerForProgressView].forEach {
+            mainStackView.addArrangedSubview($0)
+        }
+
         NSLayoutConstraint.activate([
             mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             mainStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
@@ -94,7 +115,72 @@ class ViewController: UIViewController {
             mainStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             
             containerStackView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor, constant: -offset),
-            containerStackView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor, constant: offset)])
+            containerStackView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor, constant: offset),
+        
+            progressView.leftAnchor.constraint(equalTo: containerForProgressView.leftAnchor, constant: 20),
+            progressView.rightAnchor.constraint(equalTo: containerForProgressView.rightAnchor, constant: -20),
+            progressView.heightAnchor.constraint(equalToConstant: 10),
+            progressView.centerYAnchor.constraint(equalTo: containerForProgressView.centerYAnchor)])
+    }
+    
+    // MARK: - Methods
+    
+    @objc func countdownTimer() {
+        
+        if totalTimer == secondsPassed {
+            timer.invalidate()
+            print("DONE!!!!")
+        }
+        
+        progressView.progress = Float(secondsPassed) / Float(totalTimer)
+        print("countdownTimer - \(Float(secondsPassed) / Float(totalTimer))")
+
+        secondsPassed += 1
+    }
+    
+    @objc func didPressed(_ sender: UIButton) {
+        
+        // check value by key and assign totalTimer
+        if let value = sender.currentTitle,
+            let eggCondition = eggTimes[value] {
+            totalTimer = eggCondition
+        } else {
+            print("No keys!!!")
+        }
+        
+        if timer.isValid {
+            timer.invalidate()
+        } else {
+            progressView.setProgress(0.0, animated: true)
+            progressView.progress = 0.0
+            secondsPassed = 0
+            createTimer()
+        }
+    }
+    
+    private func createTimer() {
+        timer = Timer.scheduledTimer(
+            timeInterval: 1,
+            target: self,
+            selector: #selector(countdownTimer),
+            userInfo: nil,
+            repeats: true)
+        timer.tolerance = 0.2
+    }
+    
+    private func conteinerViews() -> [ContanerView] {
+        var result: [ContanerView] = []
+        let countImage = eggImageView.count
+        let countButton = eggButtons.count
+        
+        if countImage == countButton {
+            for i in 0..<countImage {
+                result.append(.init(button: eggButtons[i], imageView: eggImageView[i]))
+            }
+        } else {
+            print("Array is nor equal, \(countImage) != \(countButton)")
+        }
+        return result
     }
 
 }
