@@ -13,6 +13,7 @@
 		10952131298064A5002C7AC2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 10952130298064A5002C7AC2 /* Assets.xcassets */; };
 		10952134298064A5002C7AC2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 10952132298064A5002C7AC2 /* LaunchScreen.storyboard */; };
 		1095214029806716002C7AC2 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 1095213F29806716002C7AC2 /* .gitignore */; };
+		1095214229814FBB002C7AC2 /* alarm_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1095214129814FBB002C7AC2 /* alarm_sound.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		10952133298064A5002C7AC2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		10952135298064A5002C7AC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1095213F29806716002C7AC2 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		1095214129814FBB002C7AC2 /* alarm_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alarm_sound.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 		1095213B298065C7002C7AC2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1095214129814FBB002C7AC2 /* alarm_sound.mp3 */,
 				10952130298064A5002C7AC2 /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -159,6 +162,7 @@
 			files = (
 				10952134298064A5002C7AC2 /* LaunchScreen.storyboard in Resources */,
 				1095214029806716002C7AC2 /* .gitignore in Resources */,
+				1095214229814FBB002C7AC2 /* alarm_sound.mp3 in Resources */,
 				10952131298064A5002C7AC2 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
