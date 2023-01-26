@@ -29,13 +29,17 @@ class ViewController: UIViewController {
     var timer = Timer()
     var totalTimer = 0
     var secondsPassed = 0
-    
-    var player: AVAudioPlayer!
-    
     let eggTimes: [String : Int] = [
         EggHardness.soft.rawValue : 3,
         EggHardness.medium.rawValue : 5,
         EggHardness.hard.rawValue : 7]
+    
+    var player: AVAudioPlayer!
+    
+    // eggs place
+    let imagesEgg: [EggImage] = [.soft_egg, .medium_egg, .hard_egg]
+    let eggHardness: [EggHardness] = [.soft, .medium, .hard]
+    let eggViews: [EggView] = [.init(), .init(), .init()]
     
     let progressView: UIProgressView = {
         let progress = UIProgressView()
@@ -70,47 +74,46 @@ class ViewController: UIViewController {
         stackView.spacing = offset
         return stackView
     }()
-    
-    let eggButtons: [EggButton] = [
-        .init(title: EggHardness.soft.rawValue),
-        .init(title: EggHardness.medium.rawValue),
-        .init(title: EggHardness.hard.rawValue)]
-    
-    let eggImageView: [EggImageView] = [
-        .init(UIImage(named: EggImage.soft_egg.rawValue)),
-        .init(UIImage(named: EggImage.medium_egg.rawValue)),
-        .init(UIImage(named: EggImage.hard_egg.rawValue))]
-    
-    lazy var containerForProgressView: UIView = {
-        let view = UIView()
-        view.addSubview(progressView)
-        return view
-    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupe()
+        setConstraints()
     }
     
     // MARK: - Start setup
 
-    private func setupe() {
+    func setupe() {
         view.backgroundColor = .white
         view.addSubview(mainStackView)
         
-        // add targets
-        eggButtons.forEach { button in
-            button.addTarget(self, action: #selector(didPressed), for: .touchUpInside)
+        let boxForProgressView = UIView()
+        boxForProgressView.addSubview(progressView)
+        
+        // set configuration for EggView
+        for (index, view) in eggViews.enumerated() {
+            view.configure(
+                text: eggHardness[index].rawValue,
+                image: UIImage(named: imagesEgg[index].rawValue))
+
+            view.eggButton.addTarget(self, action: #selector(didPressed), for: .touchUpInside)
         }
         
-        conteinerViews().forEach {
+        eggViews.forEach {
             containerStackView.addArrangedSubview($0)
         }
         
-        [titleLable, containerStackView, containerForProgressView].forEach {
+        // add view in mainStackView
+        [titleLable, containerStackView, boxForProgressView].forEach {
             mainStackView.addArrangedSubview($0)
         }
 
+    }
+    
+    func setConstraints() {
+        
+        let boxView = progressView.superview!
+        
         NSLayoutConstraint.activate([
             mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             mainStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
@@ -120,10 +123,10 @@ class ViewController: UIViewController {
             containerStackView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor, constant: -offset),
             containerStackView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor, constant: offset),
         
-            progressView.leftAnchor.constraint(equalTo: containerForProgressView.leftAnchor, constant: 20),
-            progressView.rightAnchor.constraint(equalTo: containerForProgressView.rightAnchor, constant: -20),
+            progressView.leftAnchor.constraint(equalTo: boxView.leftAnchor, constant: 20),
+            progressView.rightAnchor.constraint(equalTo: boxView.rightAnchor, constant: -20),
             progressView.heightAnchor.constraint(equalToConstant: 10),
-            progressView.centerYAnchor.constraint(equalTo: containerForProgressView.centerYAnchor)])
+            progressView.centerYAnchor.constraint(equalTo: boxView.centerYAnchor)])
     }
     
     // MARK: - Methods
@@ -135,7 +138,6 @@ class ViewController: UIViewController {
             print("DONE!!!!")
         }
         progressView.progress = Float(secondsPassed) / Float(totalTimer)
-        print("countdownTimer - \(Float(secondsPassed) / Float(totalTimer))")
         secondsPassed += 1
     }
     
@@ -167,21 +169,6 @@ class ViewController: UIViewController {
             userInfo: nil,
             repeats: true)
         timer.tolerance = 0.2
-    }
-    
-    private func conteinerViews() -> [ContanerView] {
-        var result: [ContanerView] = []
-        let countImage = eggImageView.count
-        let countButton = eggButtons.count
-        
-        if countImage == countButton {
-            for i in 0..<countImage {
-                result.append(.init(button: eggButtons[i], imageView: eggImageView[i]))
-            }
-        } else {
-            print("Array is nor equal, \(countImage) != \(countButton)")
-        }
-        return result
     }
     
     func playSound() {
