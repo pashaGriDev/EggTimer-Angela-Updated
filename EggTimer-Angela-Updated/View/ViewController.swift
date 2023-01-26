@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 enum EggImage: String {
     case soft_egg
@@ -28,6 +29,8 @@ class ViewController: UIViewController {
     var timer = Timer()
     var totalTimer = 0
     var secondsPassed = 0
+    
+    var player: AVAudioPlayer!
     
     let eggTimes: [String : Int] = [
         EggHardness.soft.rawValue : 3,
@@ -126,15 +129,13 @@ class ViewController: UIViewController {
     // MARK: - Methods
     
     @objc func countdownTimer() {
-        
         if totalTimer == secondsPassed {
             timer.invalidate()
+            playSound()
             print("DONE!!!!")
         }
-        
         progressView.progress = Float(secondsPassed) / Float(totalTimer)
         print("countdownTimer - \(Float(secondsPassed) / Float(totalTimer))")
-
         secondsPassed += 1
     }
     
@@ -181,6 +182,19 @@ class ViewController: UIViewController {
             print("Array is nor equal, \(countImage) != \(countButton)")
         }
         return result
+    }
+    
+    func playSound() {
+        let sound = (name: "alarm_sound", type: "mp3")
+        guard let path = Bundle.main.path(forResource: sound.name, ofType: sound.type) else { return }
+        let url = URL(fileURLWithPath: path)
+        do {
+            player = try AVAudioPlayer(contentsOf: url)
+            player.prepareToPlay()
+            player.play()
+        } catch let error {
+            print(error.localizedDescription)
+        }
     }
 
 }
