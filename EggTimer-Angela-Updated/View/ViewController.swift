@@ -13,7 +13,7 @@ enum EggImage: String {
     case hard_egg
 }
 
-enum EggCondition: String {
+enum EggHardness: String {
     case soft
     case medium
     case hard
@@ -30,9 +30,9 @@ class ViewController: UIViewController {
     var secondsPassed = 0
     
     let eggTimes: [String : Int] = [
-        EggCondition.soft.rawValue : 3,
-        EggCondition.medium.rawValue : 5,
-        EggCondition.hard.rawValue : 7]
+        EggHardness.soft.rawValue : 3,
+        EggHardness.medium.rawValue : 5,
+        EggHardness.hard.rawValue : 7]
     
     let progressView: UIProgressView = {
         let progress = UIProgressView()
@@ -69,9 +69,9 @@ class ViewController: UIViewController {
     }()
     
     let eggButtons: [EggButton] = [
-        .init(title: EggCondition.soft.rawValue),
-        .init(title: EggCondition.medium.rawValue),
-        .init(title: EggCondition.hard.rawValue)]
+        .init(title: EggHardness.soft.rawValue),
+        .init(title: EggHardness.medium.rawValue),
+        .init(title: EggHardness.hard.rawValue)]
     
     let eggImageView: [EggImageView] = [
         .init(UIImage(named: EggImage.soft_egg.rawValue)),
